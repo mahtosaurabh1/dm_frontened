@@ -4,7 +4,7 @@ import RegisterPage from "./pages/auth/register";
 import Login from "./pages/auth/login";
 import MainLayout from "./pages/main-layout";
 import Product from "./pages/module/product/product";
-import Shoplist from "./pages/module/shop/shoplist";
+import Shop from "./pages/module/shop";
 
 function App() {
   return (
@@ -13,7 +13,7 @@ function App() {
         <Route path="login" element={<Login />} />
         <Route path="register" element={<RegisterPage />} />
         <Route path="/dashboard" element={<MainLayout />}>
-          <Route index element={<Shoplist />} />
+          <Route index element={<Shop />} />
           <Route path="product" element={<Product />} />
         </Route>
       </Routes>

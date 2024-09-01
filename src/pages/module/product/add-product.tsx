@@ -41,6 +41,7 @@ export default function Addproduct(props: propsType) {
   const { dialogClose, isedit, open,selectedProduct } = props;
 
   const {userInfo}:any=useSelector((state:rootReducerType)=>state.authReducer);
+  const {selectedShop}:any=useSelector((state:rootReducerType)=>state.shopReducer)
   
 
   const [productInfo, setProductInfo] = React.useState<productType>({
@@ -65,7 +66,7 @@ export default function Addproduct(props: propsType) {
         weight: productInfo?.weight,
         productid:selectedProduct?._id,
         successCallback:()=>{
-          const paramAs = { userid: userInfo?._id }
+          const paramAs = { shopid: selectedShop?._id }
           dispatch(listProduct(paramAs));
           dialogClose();
         }
@@ -76,30 +77,37 @@ export default function Addproduct(props: propsType) {
         productname: productInfo?.productname,
         productprice: productInfo?.productprice,
         weight: productInfo?.weight,
-        userid:userInfo?._id,
+        shopid:selectedShop?._id,
         successCallback:()=>{
-          const paramAs = { userid: userInfo?._id }
+          const paramAs = { shopid: selectedShop?._id }
           dispatch(listProduct(paramAs));
           dialogClose();
         }
     }
+    console.log('bbbbbbbb',obj);
+    
     dispatch(addProduct(obj))
     }
   }
 
+  const handleDialogClose=()=>{
+    setProductInfo({
+      productname: "",
+      productprice: 0,
+      weight: 0,
+    });
+    dialogClose();
+  }
+
   React.useEffect(()=>{
-    console.log('efect',selectedProduct);
-
     if(isedit){     
-    console.log('efect1',selectedProduct);
-
       setProductInfo({
         productname: selectedProduct?.productname,
         productprice: selectedProduct?.productprice,
         weight: selectedProduct?.weight,
       })
     } 
-  },[selectedProduct])
+  },[selectedProduct,isedit])
 
   return (
     <Dialog
@@ -107,13 +115,13 @@ export default function Addproduct(props: propsType) {
       TransitionComponent={Transition}
       keepMounted
       fullWidth
-      onClose={dialogClose}
+      onClose={handleDialogClose}
       aria-describedby="alert-dialog-slide-description"
     >
       <DialogTitle>{isedit?"Edit product":"Add product"}</DialogTitle>
       <IconButton
         aria-label="close"
-        onClick={dialogClose}
+        onClick={handleDialogClose}
         sx={(theme) => ({
           position: "absolute",
           right: 8,

@@ -4,8 +4,12 @@ import {
   Card,
   CardActions,
   CardContent,
+  CardHeader,
   CardMedia,
   Container,
+  IconButton,
+  Menu,
+  MenuItem,
   Typography,
 } from "@mui/material";
 import React, { useEffect, useState } from "react";
@@ -19,38 +23,46 @@ import {
 import { useSelector } from "react-redux";
 import { rootReducerType } from "../../../redux/features/rootslice";
 import ProductGrid from "./product-grid";
+import MoreVertIcon from "@mui/icons-material/MoreVert";
+import DeleteOutlineRoundedIcon from '@mui/icons-material/DeleteOutlineRounded';
+import ModeEditOutlinedIcon from '@mui/icons-material/ModeEditOutlined';
 
 function Product() {
   const [open, setOpen] = useState<boolean>(false);
   const [isedit, setIsEdit] = useState<boolean>(false);
   const [selectedProduct,setSelectedProduct]=useState<any>({});
+  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(
+    null
+  );
   const { userInfo }: any = useSelector(
     (state: rootReducerType) => state.authReducer
   );
   const { productList }: any = useSelector(
     (state: rootReducerType) => state.productReduer
   );
+  const {selectedShop}:any=useSelector((state:rootReducerType)=>state.shopReducer)
 
-  const handleDeleteProduct = (val: any) => {
-    const paramAs = { userid: userInfo?._id };
-
+  const handleDeleteProduct = () => {
+    const paramAs = { shopid: selectedShop?._id }
     const data = {
-      productid: val?._id,
+      productid: selectedProduct?._id,
       successCallback: () => {
         dispatch(listProduct(paramAs));
+        setAnchorEl(null);
       },
     };
     dispatch(deleteProduct(data));
   };
 
-  const handleEditProduct = (val:any) => {
-    setSelectedProduct(val)
+  const handleEditProduct = () => {
     setOpen(true);
     setIsEdit(true);
+    setAnchorEl(null);
   };
   const dialogClose = () => {
     setOpen(false);
     setIsEdit(false);
+    setSelectedProduct({});
   };
   const dialogOpen = () => {
     setOpen(true);
@@ -58,34 +70,76 @@ function Product() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
+  const handleCloseMenu = () => {
+    setAnchorEl(null);
+  };
+
+  const handleMoreClick = (event: React.MouseEvent<HTMLElement>,val:any) => {
+    setSelectedProduct(val)
+    setAnchorEl(event.currentTarget);    
+  };
+
+  const renderMenue = (
+    <Menu
+      sx={{ mt: "45px" }}
+      id="menu-appbar"
+      anchorEl={anchorEl}
+      anchorOrigin={{
+        vertical: "top",
+        horizontal: "right",
+      }}
+      keepMounted
+      transformOrigin={{
+        vertical: "top",
+        horizontal: "right",
+      }}
+      open={Boolean(anchorEl)}
+      onClose={handleCloseMenu}
+    >
+      <MenuItem onClick={handleEditProduct}>
+      <ModeEditOutlinedIcon/>
+        <Typography sx={{ textAlign: "center",ml:'.8rem' }}>Edit</Typography>
+      </MenuItem>
+      <MenuItem onClick={handleDeleteProduct}>
+      <DeleteOutlineRoundedIcon/>
+        <Typography sx={{ textAlign: "center" ,ml:'.8rem'}}>Delete</Typography>
+      </MenuItem>
+    </Menu>
+  );
+
   useEffect(() => {
-    const paramAs = { userid: userInfo?._id };
+    const paramAs = { shopid: selectedShop?._id }
     dispatch(listProduct(paramAs));
   }, []);
 
   return (
-    <Box>
-      <Box sx={{ display: "flex", justifyContent: "flex-end" }} pr={"1rem"}>
+    <Box p={'1rem'}>
+    <Box
+      sx={{ display: "flex", justifyContent: "space-between" }}
+    >
+        <Typography variant="h6">{selectedShop?.shopname} (Products)</Typography>
         <Button variant="outlined" onClick={dialogOpen}>
           Add Product
         </Button>
-        <Addproduct
-          dialogClose={dialogClose}
-          dialogOpen={dialogOpen}
-          open={open}
-          isedit={isedit}
-          selectedProduct={selectedProduct}
-        />
       </Box>
       <Box sx={{ display: "flex", gap: "2rem" }}>
         {productList?.map((val: any) => {
           return (
-            <Card sx={{ maxWidth: 200, height: "12rem" }}>
+            <Card sx={{ width:'12rem', height: "12rem" }}>
+                <CardHeader
+                action={
+                  <IconButton aria-label="settings" onClick={(e)=>handleMoreClick(e,val)}>
+                    <MoreVertIcon />
+                  </IconButton>
+                }
+                title={val?.shopname}
+              />
               <CardMedia
                 sx={{ height: 50 }}
                 image="https://img.freepik.com/free-photo/pink-flower-white-background_1203-2127.jpg?size=626&ext=jpg"
                 title="green iguana"
               />
+
               <CardContent>
                 <Typography gutterBottom variant="h6" component="div">
                   {val?.productname}
@@ -97,18 +151,21 @@ function Product() {
                   Price {val?.productprice}
                 </Typography>
               </CardContent>
-              <CardActions>
-                <Button size="small" onClick={() => handleEditProduct(val)}>
-                  Edit
-                </Button>
-                <Button size="small" onClick={() => handleDeleteProduct(val)}>
-                  Delete
-                </Button>
-              </CardActions>
             </Card>
           );
         })}
       </Box>
+
+      <Addproduct
+          dialogClose={dialogClose}
+          dialogOpen={dialogOpen}
+          open={open}
+          isedit={isedit}
+          selectedProduct={selectedProduct}
+        />
+
+      {renderMenue}
+
     </Box>
   );
 }

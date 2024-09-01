@@ -10,14 +10,19 @@ import Avatar from "@mui/material/Avatar";
 import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 import { useNavigate } from "react-router-dom";
-
+import { useSelector } from "react-redux";
+import { rootReducerType } from "../../redux/features/rootslice";
+import LogoutOutlinedIcon from '@mui/icons-material/LogoutOutlined';
 
 function Appheader() {
   const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(
     null
   );
+  const { userInfo }: any = useSelector(
+    (state: rootReducerType) => state.authReducer
+  );
 
-  const navigate=useNavigate();
+  const navigate = useNavigate();
 
   const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElUser(event.currentTarget);
@@ -27,14 +32,18 @@ function Appheader() {
     setAnchorElUser(null);
   };
 
-  const handleLogout=()=>{
-   localStorage.clear();
-   navigate('/login') 
-  }
+  const handleLogout = () => {
+    localStorage.clear();
+    navigate("/login");
+  };
 
-  const handleProduct=()=>{
-    navigate('/dashboard/product')
-  }
+  const handleProduct = () => {
+    navigate("/dashboard/product");
+  };
+
+  const handleGotoHome = () => {
+    navigate("/dashboard");
+  };
 
   const renderMenue = (
     <Menu
@@ -53,15 +62,20 @@ function Appheader() {
       open={Boolean(anchorElUser)}
       onClose={handleCloseUserMenu}
     >
-      <MenuItem  onClick={handleCloseUserMenu}>
-          <Typography sx={{ textAlign: "center" }}>Profile</Typography>
-        </MenuItem>
-        <MenuItem  onClick={handleProduct}>
-          <Typography sx={{ textAlign: "center" }}>Product</Typography>
-        </MenuItem>
-        <MenuItem  onClick={handleLogout}>
-          <Typography sx={{ textAlign: "center" }}>Logout</Typography>
-        </MenuItem>
+      <MenuItem onClick={handleCloseUserMenu}>
+        <Box display="flex" alignItems="center">
+          <Avatar sx={{ marginRight: 2 }}>
+            {userInfo?.fullname.charAt(0)}
+          </Avatar>
+          <Typography sx={{ textAlign: "center" }}>
+            {userInfo?.fullname}
+          </Typography>
+        </Box>
+      </MenuItem>
+      <MenuItem onClick={handleLogout}>
+      <LogoutOutlinedIcon/>
+        <Typography sx={{ textAlign: "center" ,ml:'.8rem'}}>Logout</Typography>
+      </MenuItem>
     </Menu>
   );
 
@@ -76,6 +90,7 @@ function Appheader() {
             variant="h6"
             noWrap
             component="a"
+            onClick={handleGotoHome}
             sx={{
               mr: 2,
               display: { xs: "none", md: "flex" },
@@ -84,6 +99,7 @@ function Appheader() {
               letterSpacing: ".3rem",
               color: "inherit",
               textDecoration: "none",
+              cursor: "pointer",
             }}
           >
             U
@@ -91,7 +107,9 @@ function Appheader() {
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
+                <Avatar sx={{ marginRight: 2 }}>
+                  {userInfo?.fullname.charAt(0)}
+                </Avatar>
               </IconButton>
             </Tooltip>
             {renderMenue}
