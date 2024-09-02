@@ -1,4 +1,5 @@
 import {
+  Avatar,
   Box,
   Button,
   Card,
@@ -7,9 +8,12 @@ import {
   CardHeader,
   CardMedia,
   Container,
+  Hidden,
   IconButton,
   Menu,
   MenuItem,
+  Stack,
+  Tooltip,
   Typography,
 } from "@mui/material";
 import React, { useEffect, useState } from "react";
@@ -27,6 +31,9 @@ import MoreVertIcon from "@mui/icons-material/MoreVert";
 import DeleteOutlineRoundedIcon from "@mui/icons-material/DeleteOutlineRounded";
 import ModeEditOutlinedIcon from "@mui/icons-material/ModeEditOutlined";
 import ShoppingBagOutlinedIcon from "@mui/icons-material/ShoppingBagOutlined";
+import { Shop2Outlined } from "@mui/icons-material";
+import Shopicon from "../../../shared/icon/shop.icon";
+import { red } from "@mui/material/colors";
 
 function Shop() {
   const [open, setOpen] = useState<boolean>(false);
@@ -79,10 +86,11 @@ function Shop() {
     setAnchorElUser(null);
   };
 
-  const handleGotoBusinessPage=(val:any)=>{
+  const handleGotoBusinessPage = (val: any) => {
+    console.log("bbbbbbbbb", val);
+
     console.log(val);
-    
-  }
+  };
   const handleProduct = () => {
     navigate("/dashboard/product");
   };
@@ -149,32 +157,40 @@ function Shop() {
       <Box sx={{ display: "flex", gap: "2rem" }}>
         {shopList?.map((val: any) => {
           return (
-            <Card sx={{ width: "8rem", height: "8rem" }} onClick={()=>handleGotoBusinessPage(val)}>
+            <Card
+              sx={{
+                px: 1.25,
+                py: 1.25,
+                backgroundColor: "#fff",
+                boxShadow: "4px 9px 30px 0 rgba(0,0,0,0.04)",
+                position: "relative",
+                borderRadius: 2,
+                cursor: "pointer",
+                display:'flex',
+                width:'15rem',
+                gap:'2rem'
+
+              }}
+              onClick={() => handleGotoBusinessPage(val)}
+            >
+      
+              <Stack
+                sx={{ height: "100%",display:'flex',alignItems:'center',justifyContent:'center' }}
+                alignItems={"flex-start"}
+      
+              >
+               <Shopicon />
+              </Stack>
+
               <CardHeader
                 action={
-                  <IconButton
-                    aria-label="settings"
-                    onClick={(e) => handleMoreClick(e, val)}
-                    sx={{zIndex:1}}
-                  >
+                  <IconButton aria-label="settings" onClick={(e)=>handleMoreClick(e,val)}>
                     <MoreVertIcon />
                   </IconButton>
                 }
                 title={val?.shopname}
+                subheader="address"
               />
-              <CardMedia
-                sx={{ height: 50 }}
-                image="https://img.freepik.com/free-photo/pink-flower-white-background_1203-2127.jpg?size=626&ext=jpg"
-                title="green iguana"
-              />
-              {/* <CardActions>
-                <Button size="small" onClick={() => handleEditProduct(val)}>
-                  Edit
-                </Button>
-                <Button size="small" onClick={() => handleDeleteProduct(val)}>
-                  Delete
-                </Button>
-              </CardActions> */}
             </Card>
           );
         })}
