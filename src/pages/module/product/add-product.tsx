@@ -3,7 +3,6 @@ import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
-import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 import Slide from "@mui/material/Slide";
 import { TransitionProps } from "@mui/material/transitions";
@@ -34,20 +33,15 @@ interface propsType {
 
 interface productType {
   productname: string;
-  productprice: number;
-  weight: number;
 }
 export default function Addproduct(props: propsType) {
   const { dialogClose, isedit, open,selectedProduct } = props;
 
-  const {userInfo}:any=useSelector((state:rootReducerType)=>state.authReducer);
   const {selectedShop}:any=useSelector((state:rootReducerType)=>state.shopReducer)
   
 
   const [productInfo, setProductInfo] = React.useState<productType>({
     productname: "",
-    productprice: 0,
-    weight: 0,
   });
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -62,8 +56,6 @@ export default function Addproduct(props: propsType) {
     if(isedit){
       let obj={
         productname: productInfo?.productname,
-        productprice: productInfo?.productprice,
-        weight: productInfo?.weight,
         productid:selectedProduct?._id,
         successCallback:()=>{
           const paramAs = { shopid: selectedShop?._id }
@@ -75,26 +67,20 @@ export default function Addproduct(props: propsType) {
     }else{
       let obj={
         productname: productInfo?.productname,
-        productprice: productInfo?.productprice,
-        weight: productInfo?.weight,
         shopid:selectedShop?._id,
         successCallback:()=>{
           const paramAs = { shopid: selectedShop?._id }
           dispatch(listProduct(paramAs));
           dialogClose();
         }
-    }
-    console.log('bbbbbbbb',obj);
-    
+    }    
     dispatch(addProduct(obj))
     }
   }
 
   const handleDialogClose=()=>{
     setProductInfo({
-      productname: "",
-      productprice: 0,
-      weight: 0,
+      productname: ""
     });
     dialogClose();
   }
@@ -102,9 +88,7 @@ export default function Addproduct(props: propsType) {
   React.useEffect(()=>{
     if(isedit){     
       setProductInfo({
-        productname: selectedProduct?.productname,
-        productprice: selectedProduct?.productprice,
-        weight: selectedProduct?.weight,
+        productname: selectedProduct?.productname
       })
     } 
   },[selectedProduct,isedit])
@@ -144,28 +128,6 @@ export default function Addproduct(props: propsType) {
           value={productInfo.productname}
           onChange={handleChange}
           
-        />
-        <TextField
-          label="Product price"
-          id="outlined-size-small"
-          defaultValue="Small"
-          size="small"
-          fullWidth
-          type="number"
-          name="productprice"
-          value={productInfo.productprice}
-          onChange={handleChange}
-        />
-        <TextField
-          label="Product weight in kg"
-          id="outlined-size-small"
-          defaultValue="Small"
-          size="small"
-          fullWidth
-          type="number"
-          name="weight"
-          value={productInfo.weight}
-          onChange={handleChange}
         />
       </DialogContent>
       <DialogActions>

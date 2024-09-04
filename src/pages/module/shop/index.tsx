@@ -88,8 +88,8 @@ function Shop() {
 
   const handleGotoBusinessPage = (val: any) => {
     console.log("bbbbbbbbb", val);
-
-    console.log(val);
+    navigate("/dashboard/business");
+    dispatch(setSelectedShop(val));
   };
   const handleProduct = () => {
     navigate("/dashboard/product");
@@ -171,13 +171,13 @@ function Shop() {
                 gap:'2rem'
 
               }}
-              onClick={() => handleGotoBusinessPage(val)}
+              
             >
       
               <Stack
                 sx={{ height: "100%",display:'flex',alignItems:'center',justifyContent:'center' }}
                 alignItems={"flex-start"}
-      
+                onClick={() => handleGotoBusinessPage(val)}
               >
                <Shopicon />
               </Stack>

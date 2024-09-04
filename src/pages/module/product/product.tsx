@@ -22,7 +22,6 @@ import {
 } from "../../../redux/features/product.slice";
 import { useSelector } from "react-redux";
 import { rootReducerType } from "../../../redux/features/rootslice";
-import ProductGrid from "./product-grid";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import DeleteOutlineRoundedIcon from '@mui/icons-material/DeleteOutlineRounded';
 import ModeEditOutlinedIcon from '@mui/icons-material/ModeEditOutlined';
@@ -143,12 +142,6 @@ function Product() {
               <CardContent>
                 <Typography gutterBottom variant="h6" component="div">
                   {val?.productname}
-                </Typography>
-                <Typography variant="body2" sx={{ color: "text.secondary" }}>
-                  Weight {val?.weight}
-                </Typography>
-                <Typography variant="body2" sx={{ color: "text.secondary" }}>
-                  Price {val?.productprice}
                 </Typography>
               </CardContent>
             </Card>
