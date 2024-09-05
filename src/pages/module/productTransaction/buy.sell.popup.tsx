@@ -30,6 +30,8 @@ import {
   editProduct,
   listProduct,
 } from "../../../redux/features/product.slice";
+import { BuySellEnum } from "../../../shared/constant";
+import { addProductTransaction, editProductTransaction, listProductTransaction } from "../../../redux/features/product.transaction.slice";
 
 const Transition = React.forwardRef(function Transition(
   props: TransitionProps & {
@@ -68,13 +70,11 @@ export default function BuySellPopup(props: propsType) {
     (state: rootReducerType) => state.productReduer
   );
 
-  console.log("bbbbbbbb", productList);
-
   const [productInfo, setProductInfo] = React.useState<productType>({
     productname: "",
     productprice: 0,
     weight: 0,
-    transactionstatus:1
+    transactionstatus:0
   });
 
   const [chips, setChips] = React.useState<any>(null);
@@ -84,7 +84,6 @@ export default function BuySellPopup(props: propsType) {
   };
 
   const handleAddChip = (event: any, newValue: any) => {
-
     setChips(newValue)
   };
 
@@ -112,36 +111,38 @@ export default function BuySellPopup(props: propsType) {
   const handleButton = () => {
     if (isedit) {
       let obj = {
-        productname: productInfo?.productname,
+        productname: chips?.productname,
+        productid:chips?._id,
         productprice: productInfo?.productprice,
         weight: productInfo?.weight,
-        productid: selectedProduct?._id,
+        producttransactionid: selectedProduct?._id,
         transactionstatus:productInfo?.transactionstatus,
         successCallback: () => {
-          const obj = { shopid: selectedShop?._id };
-          dispatch(listProduct(obj));
+          const paramAs = { shopid: selectedShop?._id };
+          dispatch(listProductTransaction(paramAs));
           dialogClose();
         },
       };
-      dispatch(editProduct(obj));
+      dispatch(editProductTransaction(obj));
     } else {
       let obj = {
         productname: chips?.productname,
+        productid:chips?._id,
         productprice: productInfo?.productprice,
         weight: productInfo?.weight,
         shopid: selectedShop?._id,
         transactionstatus:productInfo?.transactionstatus,
-        // successCallback: () => {
-        //   const paramAs = { shopid: selectedShop?._id };
-        //   dispatch(listProduct(paramAs));
-        //   dialogClose();
-        // },
+        successCallback: () => {
+          const paramAs = { shopid: selectedShop?._id };
+          dispatch(listProductTransaction(paramAs));
+          dialogClose();
+        },
       };
 
       console.log('aaaaaaaaaaaa',obj);
       
 
-    //   dispatch(addProduct(obj));
+      dispatch(addProductTransaction(obj));
     }
   };
 
@@ -163,6 +164,7 @@ export default function BuySellPopup(props: propsType) {
         weight: selectedProduct?.weight,
         transactionstatus:selectedProduct?.transactionstatus
       });
+      setChips(selectedProduct)
     }
   }, [selectedProduct, isedit]);
 
@@ -264,8 +266,8 @@ export default function BuySellPopup(props: propsType) {
             onChange={handleRadioChange}
             sx={{ display: "flex", flexDirection: "row" }}
           >
-            <FormControlLabel value={1} control={<Radio />} label="Buy" />
-            <FormControlLabel value={0} control={<Radio />} label="Sell" />
+            <FormControlLabel value={BuySellEnum.BUY} control={<Radio />} label="Buy" />
+            <FormControlLabel value={BuySellEnum.SELL} control={<Radio />} label="Sell" />
           </RadioGroup>
         </FormControl>
       </DialogContent>

@@ -5,7 +5,7 @@ import Login from "./pages/auth/login";
 import MainLayout from "./pages/main-layout";
 import Product from "./pages/module/product/product";
 import Shop from "./pages/module/shop";
-import Business from "./pages/module/bussiness";
+import Business from "./pages/module/productTransaction";
 
 function App() {
   return (

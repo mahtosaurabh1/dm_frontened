@@ -8,5 +8,10 @@ export const endpoint={
     addShop:'/add-shop',
     getShop:'get-shop',
     deleteShop:'/delete-shop',
-    editShop:'/update-shop'
+    editShop:'/update-shop',
+
+    addProductTransaction:'/addProductTransaction',
+    getProductTransaction:'getProductTransaction',
+    deleteProductTransaction:'/deleteProductTransaction',
+    editProductTransaction:'/updateProductTransaction',
 }
