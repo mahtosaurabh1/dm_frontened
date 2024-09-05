@@ -119,6 +119,7 @@ function Business() {
         <span>{params.row.transactionstatus === 1 ? "Sell" : "Buy"}</span>
       ),
     },
+    { field: "transactionprice", headerName: "Total price", flex: 1 },
     {
       field: "createdAt",
       headerName: "Created At",
