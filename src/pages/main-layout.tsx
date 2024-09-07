@@ -9,7 +9,7 @@ const MainLayout = () => {
   return (
     <div>
     <Appheader />
-    <Box sx={{backgroundColor:'#EAE4DD',height:'90.7vh'}}>
+    <Box sx={{backgroundColor:'#EAE4DD',height:'90.7vh',width:'80hw'}}>
       <Outlet />
     </Box>
   </div>

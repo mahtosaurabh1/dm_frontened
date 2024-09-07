@@ -42,7 +42,7 @@ function Appheader() {
   };
 
   const handleGotoHome = () => {
-    navigate("/dashboard");
+    navigate("/shoplist");
   };
 
   const renderMenue = (

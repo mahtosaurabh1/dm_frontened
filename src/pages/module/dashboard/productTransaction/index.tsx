@@ -8,9 +8,9 @@ import {
 } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { rootReducerType } from "../../../redux/features/rootslice";
+import { rootReducerType } from "../../../../redux/features/rootslice";
 import BuySellPopup from "./buy.sell.popup";
-import { deleteProductTransaction, listProductTransaction } from "../../../redux/features/product.transaction.slice";
+import { deleteProductTransaction, listProductTransaction } from "../../../../redux/features/product.transaction.slice";
 import { useDispatch } from "react-redux";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import dayjs from "dayjs";
@@ -152,15 +152,12 @@ function Business() {
     dispatch(listProductTransaction(obj));
   }, []);
   return (
-    <Box p={2}>
-      <Box sx={{ display: "flex", justifyContent: "space-between" }}>
-        <Typography variant="h5">{selectedShop?.shopname}(Shop)</Typography>
-        <Box sx={{ display: "flex", gap: "1rem" }}>
-          <Button variant="outlined" onClick={dialogOpen}>
+    <Box p={2} sx={{width:'80rem',height:'100%'}}>
+       <Box sx={{display:'flex',justifyContent:'flex-end',mb:'.4rem'}}>
+       <Button variant="outlined" onClick={dialogOpen}>
             Add business
           </Button>
-        </Box>
-      </Box>
+       </Box>
 
       <Box>
         <DataGrid

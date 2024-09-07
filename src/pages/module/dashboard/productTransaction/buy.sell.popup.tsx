@@ -23,15 +23,15 @@ import { Close } from "@mui/icons-material";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
-import { rootReducerType } from "../../../redux/features/rootslice";
+import { rootReducerType } from "../../../../redux/features/rootslice";
 import CloseIcon from "@mui/icons-material/Close";
 import {
   addProduct,
   editProduct,
   listProduct,
-} from "../../../redux/features/product.slice";
-import { BuySellEnum } from "../../../shared/constant";
-import { addProductTransaction, editProductTransaction, listProductTransaction } from "../../../redux/features/product.transaction.slice";
+} from "../../../../redux/features/product.slice";
+import { BuySellEnum } from "../../../../shared/constant";
+import { addProductTransaction, editProductTransaction, listProductTransaction } from "../../../../redux/features/product.transaction.slice";
 
 const Transition = React.forwardRef(function Transition(
   props: TransitionProps & {

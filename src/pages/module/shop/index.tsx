@@ -31,7 +31,7 @@ import MoreVertIcon from "@mui/icons-material/MoreVert";
 import DeleteOutlineRoundedIcon from "@mui/icons-material/DeleteOutlineRounded";
 import ModeEditOutlinedIcon from "@mui/icons-material/ModeEditOutlined";
 import ShoppingBagOutlinedIcon from "@mui/icons-material/ShoppingBagOutlined";
-import { Shop2Outlined } from "@mui/icons-material";
+import { Shop2, Shop2Outlined } from "@mui/icons-material";
 import Shopicon from "../../../shared/icon/shop.icon";
 import { red } from "@mui/material/colors";
 
@@ -87,12 +87,11 @@ function Shop() {
   };
 
   const handleGotoBusinessPage = (val: any) => {
-    console.log("bbbbbbbbb", val);
-    navigate("/dashboard/business");
+    navigate("/dashboard");
     dispatch(setSelectedShop(val));
   };
   const handleProduct = () => {
-    navigate("/dashboard/product");
+    navigate("/product");
   };
 
   const renderMenue = (
@@ -179,7 +178,7 @@ function Shop() {
                 alignItems={"flex-start"}
                 onClick={() => handleGotoBusinessPage(val)}
               >
-               <Shopicon />
+               <Shop2 />
               </Stack>
 
               <CardHeader

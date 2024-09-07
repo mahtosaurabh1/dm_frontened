@@ -11,8 +11,8 @@ import { Close } from "@mui/icons-material";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
-import { rootReducerType } from "../../../redux/features/rootslice";
-import { addProduct, editProduct, listProduct } from "../../../redux/features/product.slice";
+import { rootReducerType } from "../../../../redux/features/rootslice";
+import { addProduct, editProduct, listProduct } from "../../../../redux/features/product.slice";
 
 const Transition = React.forwardRef(function Transition(
   props: TransitionProps & {

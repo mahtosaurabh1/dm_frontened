@@ -3,9 +3,11 @@ import "./App.css";
 import RegisterPage from "./pages/auth/register";
 import Login from "./pages/auth/login";
 import MainLayout from "./pages/main-layout";
-import Product from "./pages/module/product/product";
+import Product from "./pages/module/dashboard/product/product";
 import Shop from "./pages/module/shop";
-import Business from "./pages/module/productTransaction";
+import Business from "./pages/module/dashboard/productTransaction";
+import { Layout } from "./pages/module/dashboard/layout";
+import Total from "./pages/module/dashboard/tbuysell/tbuysell";
 
 function App() {
   return (
@@ -13,15 +15,18 @@ function App() {
       <Routes>
         <Route path="login" element={<Login />} />
         <Route path="register" element={<RegisterPage />} />
-        <Route path="/dashboard" element={<MainLayout />}>
-          <Route index element={<Shop />} />
-          <Route path="product" element={<Product />} />
-          <Route path="business" element={<Business />} />
+
+        <Route path="/" element={<MainLayout />}>
+          <Route path="shoplist" element={<Shop />} />
+
+          <Route path="/" element={<Layout />}>
+            <Route index path="dashboard" element={<Business />} />
+            <Route path="product" element={<Product />} />
+            <Route path="tbuysell" element={<Total/>}/>
+          </Route>
         </Route>
       </Routes>
     </Router>
-
-    
   );
 }
 
