@@ -14,4 +14,9 @@ export const endpoint={
     getProductTransaction:'getProductTransaction',
     deleteProductTransaction:'/deleteProductTransaction',
     editProductTransaction:'/updateProductTransaction',
+
+    addExpenses:'/addexpenses',
+    getExpenses:'getexpenses',
+    deleteExpenses:'/deleteexpenses',
+    editExpenses:'/updateExpanses',
 }

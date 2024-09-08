@@ -3,6 +3,7 @@ import authSaga from './auth.saga'
 import productSaga from "./product.saga";
 import shopSaga from "./shop.saga";
 import productTransactionSaga from "./product.transaction.saga";
+import expensesSaga from "./expenses.saga";
 
 
 function* rootSaga() {
@@ -10,7 +11,8 @@ function* rootSaga() {
    authSaga(),
    productSaga(),
    shopSaga(),
-   productTransactionSaga()
+   productTransactionSaga(),
+   expensesSaga()
   ]);
 }
 
