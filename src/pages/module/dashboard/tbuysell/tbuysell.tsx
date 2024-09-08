@@ -19,9 +19,9 @@ function Total() {
   const dispatch = useDispatch();
 
   const columns: GridColDef[] = [
-    { field: "productname", headerName: "Product Name", flex: 1 },
-    //   { field: "productprice", headerName: "Product Price", flex: 1 },
-    { field: "totalWeight", headerName: "Weight", flex: 1 },
+    { field: "productname", headerName: "Product name", flex: 1 },
+      { field: "totalprice", headerName: "Total price", flex: 1 },
+    { field: "totalWeight", headerName: "Total weight", flex: 1 },
     {
       field: "transactionstatus",
       headerName: "Transaction Status",
@@ -30,7 +30,6 @@ function Total() {
         <span>{params.row.transactionstatus === 1 ? "Sell" : "Buy"}</span>
       ),
     },
-    { field: "transactionprice", headerName: "Total price", flex: 1 },
   ];
 
 

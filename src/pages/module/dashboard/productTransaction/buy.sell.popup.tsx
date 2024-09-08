@@ -31,7 +31,11 @@ import {
   listProduct,
 } from "../../../../redux/features/product.slice";
 import { BuySellEnum } from "../../../../shared/constant";
-import { addProductTransaction, editProductTransaction, listProductTransaction } from "../../../../redux/features/product.transaction.slice";
+import {
+  addProductTransaction,
+  editProductTransaction,
+  listProductTransaction,
+} from "../../../../redux/features/product.transaction.slice";
 
 const Transition = React.forwardRef(function Transition(
   props: TransitionProps & {
@@ -54,7 +58,7 @@ interface productType {
   productname: string;
   productprice: number;
   weight: number;
-  transactionstatus:number
+  transactionstatus: number;
 }
 export default function BuySellPopup(props: propsType) {
   const { dialogClose, isedit, open, selectedProduct } = props;
@@ -74,7 +78,7 @@ export default function BuySellPopup(props: propsType) {
     productname: "",
     productprice: 0,
     weight: 0,
-    transactionstatus:0
+    transactionstatus: 0,
   });
 
   const [chips, setChips] = React.useState<any>(null);
@@ -84,12 +88,16 @@ export default function BuySellPopup(props: propsType) {
   };
 
   const handleAddChip = (event: any, newValue: any) => {
-    setChips(newValue)
+    console.log('aaaaaaaaaaaaa',newValue);
+    
+    setChips(newValue);
   };
 
-
   const handleRadioChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setProductInfo({ ...productInfo, transactionstatus: Number(event.target.value) });
+    setProductInfo({
+      ...productInfo,
+      transactionstatus: Number(event.target.value),
+    });
   };
 
   const dispatch = useDispatch();
@@ -108,52 +116,52 @@ export default function BuySellPopup(props: propsType) {
     }
   };
 
-  const handleButton = () => {
-    if (isedit) {
-      let obj = {
-        productname: chips?.productname,
-        productid:chips?._id,
-        productprice: productInfo?.productprice,
-        weight: productInfo?.weight,
-        producttransactionid: selectedProduct?._id,
-        transactionstatus:productInfo?.transactionstatus,
-        successCallback: () => {
-          const paramAs = { shopid: selectedShop?._id };
-          dispatch(listProductTransaction(paramAs));
-          dialogClose();
-        },
-      };
-      dispatch(editProductTransaction(obj));
-    } else {
-      let obj = {
-        productname: chips?.productname,
-        productid:chips?._id,
-        productprice: productInfo?.productprice,
-        weight: productInfo?.weight,
-        shopid: selectedShop?._id,
-        transactionstatus:productInfo?.transactionstatus,
-        successCallback: () => {
-          const paramAs = { shopid: selectedShop?._id };
-          dispatch(listProductTransaction(paramAs));
-          dialogClose();
-        },
-      };
-
-      console.log('aaaaaaaaaaaa',obj);
-      
-
-      dispatch(addProductTransaction(obj));
-    }
-  };
-
   const handleDialogClose = () => {
     setProductInfo({
       productname: "",
       productprice: 0,
       weight: 0,
-      transactionstatus:1
+      transactionstatus: 0,
     });
     dialogClose();
+    setChips(null);
+  };
+
+  const handleButton = () => {
+    if (isedit) {
+      let obj = {
+        productname: chips?.productname,
+        productid: chips?._id,
+        productprice: productInfo?.productprice,
+        weight: productInfo?.weight,
+        producttransactionid: selectedProduct?._id,
+        transactionstatus: productInfo?.transactionstatus,
+        successCallback: () => {
+          const paramAs = { shopid: selectedShop?._id };
+          dispatch(listProductTransaction(paramAs));
+          handleDialogClose();
+        },
+      };
+      dispatch(editProductTransaction(obj));
+      console.log('aaaa',chips);
+      
+    } else {
+      let obj = {
+        productname: chips?.productname,
+        productid: chips?._id,
+        productprice: productInfo?.productprice,
+        weight: productInfo?.weight,
+        shopid: selectedShop?._id,
+        transactionstatus: productInfo?.transactionstatus,
+        successCallback: () => {
+          const paramAs = { shopid: selectedShop?._id };
+          dispatch(listProductTransaction(paramAs));
+          handleDialogClose();
+        },
+      };
+
+      dispatch(addProductTransaction(obj));
+    }
   };
 
   React.useEffect(() => {
@@ -162,12 +170,11 @@ export default function BuySellPopup(props: propsType) {
         productname: selectedProduct?.productname,
         productprice: selectedProduct?.productprice,
         weight: selectedProduct?.weight,
-        transactionstatus:selectedProduct?.transactionstatus
+        transactionstatus: selectedProduct?.transactionstatus,
       });
-      setChips(selectedProduct)
+      setChips({productname:selectedProduct.productname,_id:selectedProduct.productid});
     }
   }, [selectedProduct, isedit]);
-
 
   return (
     <Dialog
@@ -204,7 +211,6 @@ export default function BuySellPopup(props: propsType) {
           onInputChange={(event, newInputValue) =>
             handleShopnameChange(newInputValue)
           }
-          value={null}
           onChange={(event, newValue) => handleAddChip(event, newValue)}
           renderInput={(params) => (
             <TextField
@@ -212,22 +218,22 @@ export default function BuySellPopup(props: propsType) {
               label="Add products"
               variant="outlined"
               fullWidth
-            //   value={productInfo.productname}
+                value={productInfo.productname}
               InputProps={{
                 ...params.InputProps,
                 startAdornment: (
                   <InputAdornment position="start">
-                   {
-                    chips &&  <Chip
-                    // key={index}
-                    label={chips?.productname}
-                    size="small"
-                    color="primary"
-                    onDelete={handleDelete}
-                    deleteIcon={<CloseIcon />}
-                    style={{ marginRight: 4 }}
-                  />
-                   }
+                    {chips && (
+                      <Chip
+                        // key={index}
+                        label={chips?.productname}
+                        size="small"
+                        color="primary"
+                        onDelete={handleDelete}
+                        deleteIcon={<CloseIcon />}
+                        style={{ marginRight: 4 }}
+                      />
+                    )}
                   </InputAdornment>
                 ),
               }}
@@ -266,8 +272,16 @@ export default function BuySellPopup(props: propsType) {
             onChange={handleRadioChange}
             sx={{ display: "flex", flexDirection: "row" }}
           >
-            <FormControlLabel value={BuySellEnum.BUY} control={<Radio />} label="Buy" />
-            <FormControlLabel value={BuySellEnum.SELL} control={<Radio />} label="Sell" />
+            <FormControlLabel
+              value={BuySellEnum.BUY}
+              control={<Radio />}
+              label="Buy"
+            />
+            <FormControlLabel
+              value={BuySellEnum.SELL}
+              control={<Radio />}
+              label="Sell"
+            />
           </RadioGroup>
         </FormControl>
       </DialogContent>

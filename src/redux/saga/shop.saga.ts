@@ -15,8 +15,8 @@ function* addShopSaga(action: any) {
       successCallback();
       toastSuccess("added");
     }
-  } catch (err: any) {
-    toastError(err.message);
+  } catch (err: any) {    
+    toastError(err.response.data.result);
     yield put(addShopFailure(err));
   }
 }

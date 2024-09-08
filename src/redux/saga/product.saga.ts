@@ -28,7 +28,7 @@ function* addProductSaga(action: any) {
       toastSuccess("added");
     }
   } catch (err: any) {
-    toastError(err.message);
+    toastError(err.response.data.result);
     yield put(addProductFailure(err));
   }
 }

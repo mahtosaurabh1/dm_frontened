@@ -51,6 +51,12 @@ export default function Addproduct(props: propsType) {
     setProductInfo({ ...productInfo, [name]: value });
   };
 
+  const handleDialogClose=()=>{
+    setProductInfo({
+      productname: ""
+    });
+    dialogClose();
+  }
 
   const handleButton=()=>{
     if(isedit){
@@ -60,7 +66,7 @@ export default function Addproduct(props: propsType) {
         successCallback:()=>{
           const paramAs = { shopid: selectedShop?._id }
           dispatch(listProduct(paramAs));
-          dialogClose();
+          handleDialogClose();
         }
     }
     dispatch(editProduct(obj))
@@ -71,19 +77,14 @@ export default function Addproduct(props: propsType) {
         successCallback:()=>{
           const paramAs = { shopid: selectedShop?._id }
           dispatch(listProduct(paramAs));
-          dialogClose();
+          handleDialogClose();
         }
     }    
     dispatch(addProduct(obj))
     }
   }
 
-  const handleDialogClose=()=>{
-    setProductInfo({
-      productname: ""
-    });
-    dialogClose();
-  }
+
 
   React.useEffect(()=>{
     if(isedit){     

@@ -48,7 +48,7 @@ export default function Addshop(props: propsType) {
   );
 
   const [shopInfo, setShopInfo] = React.useState<shopType>({
-    shopname: "",
+    shopname: ""
   });
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -58,6 +58,14 @@ export default function Addshop(props: propsType) {
     setShopInfo({ ...shopInfo, [name]: value });
   };
 
+  const handleDialogClose=()=>{
+    dialogClose();
+    dispatch(setSelectedShop({}));
+    setShopInfo({
+      shopname:""
+    });
+  }
+
   const handleButton = () => {
     if (isedit) {
       let obj = {
@@ -66,7 +74,7 @@ export default function Addshop(props: propsType) {
         successCallback: () => {
           const paramAs = { userid: userInfo?._id };
           dispatch(listShop(paramAs));
-          dialogClose();
+          handleDialogClose();
         },
       };
       dispatch(editShop(obj));
@@ -77,20 +85,14 @@ export default function Addshop(props: propsType) {
         successCallback: () => {
           const paramAs = { userid: userInfo?._id };
           dispatch(listShop(paramAs));
-          dialogClose();
+          handleDialogClose();
         },
       };
       dispatch(addShop(obj));
     }
   };
 
-  const handleDialogClose=()=>{
-    dialogClose();
-    dispatch(setSelectedShop({}));
-    setShopInfo({
-      shopname:""
-    });
-  }
+
 
   React.useEffect(() => {
     if (isedit) {
