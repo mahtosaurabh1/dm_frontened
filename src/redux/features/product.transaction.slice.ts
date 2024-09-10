@@ -3,12 +3,14 @@ import { createSlice } from "@reduxjs/toolkit";
 export interface productTransactionType {
   loading: boolean;
   productTransaction: [];
+  totalBuySell:any;
   error: Error | null;
 }
 
 const initialState: productTransactionType = {
   loading: false,
   productTransaction: [],
+  totalBuySell:{},
   error: null,
 };
 
@@ -60,6 +62,18 @@ export const productTransactionSlice = createSlice({
       state.error = action.payload;
       state.loading = false;
     },
+
+    totalBuySellPrice: (state,action)=>{
+      state.loading = true;
+  },
+  totalBuySellPriceSuccess: (state,action) =>{
+      state.totalBuySell=action.payload
+      state.loading = false;
+  },
+  totalBuySellPriceFailure: (state,action) =>{
+      state.error = action.payload;
+      state.loading = false;
+  },
   },
 });
 
@@ -76,6 +90,9 @@ export const {
   editProductTransaction,
   editProductTransactionSuccess,
   editProductTransactionFailure,
+  totalBuySellPrice,
+  totalBuySellPriceSuccess,
+  totalBuySellPriceFailure
 } = productTransactionSlice.actions;
 
 export default productTransactionSlice.reducer;

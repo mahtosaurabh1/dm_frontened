@@ -14,6 +14,7 @@ export const endpoint={
     getProductTransaction:'getProductTransaction',
     deleteProductTransaction:'/deleteProductTransaction',
     editProductTransaction:'/updateProductTransaction',
+    totalbuysellprice:'/totalbuysellprice',
 
     addExpenses:'/addexpenses',
     getExpenses:'getexpenses',
