@@ -17,6 +17,7 @@ export const endpoint={
 
     addExpenses:'/addexpenses',
     getExpenses:'getexpenses',
-    deleteExpenses:'/deleteexpenses',
+    deleteExpenses:'/deleteExpenses',
     editExpenses:'/updateExpanses',
+    totalExpenses:'getTotalExpenses'
 }

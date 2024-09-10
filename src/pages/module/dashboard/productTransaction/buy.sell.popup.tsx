@@ -88,8 +88,8 @@ export default function BuySellPopup(props: propsType) {
   };
 
   const handleAddChip = (event: any, newValue: any) => {
-    console.log('aaaaaaaaaaaaa',newValue);
-    
+    console.log("aaaaaaaaaaaaa", newValue);
+
     setChips(newValue);
   };
 
@@ -143,8 +143,7 @@ export default function BuySellPopup(props: propsType) {
         },
       };
       dispatch(editProductTransaction(obj));
-      console.log('aaaa',chips);
-      
+      console.log("aaaa", chips);
     } else {
       let obj = {
         productname: chips?.productname,
@@ -172,7 +171,10 @@ export default function BuySellPopup(props: propsType) {
         weight: selectedProduct?.weight,
         transactionstatus: selectedProduct?.transactionstatus,
       });
-      setChips({productname:selectedProduct.productname,_id:selectedProduct.productid});
+      setChips({
+        productname: selectedProduct.productname,
+        _id: selectedProduct.productid,
+      });
     }
   }, [selectedProduct, isedit]);
 
@@ -218,7 +220,7 @@ export default function BuySellPopup(props: propsType) {
               label="Add products"
               variant="outlined"
               fullWidth
-                value={productInfo.productname}
+              value={productInfo.productname}
               InputProps={{
                 ...params.InputProps,
                 startAdornment: (
@@ -243,14 +245,35 @@ export default function BuySellPopup(props: propsType) {
         <TextField
           label="Product price"
           id="outlined-size-small"
-          defaultValue="Small"
           size="small"
           fullWidth
           type="number"
           name="productprice"
           value={productInfo.productprice}
           onChange={handleChange}
+          InputProps={{
+            inputProps: {
+              style: {
+                // Hides the default increment/decrement icons (spinner)
+                MozAppearance: "textfield",
+              },
+            },
+            sx: {
+              "& input[type=number]": {
+                MozAppearance: "textfield", // Firefox
+                "&::-webkit-outer-spin-button": {
+                  WebkitAppearance: "none",
+                  margin: 0,
+                },
+                "&::-webkit-inner-spin-button": {
+                  WebkitAppearance: "none",
+                  margin: 0,
+                },
+              },
+            },
+          }}
         />
+
         <TextField
           label="Product weight in kg"
           id="outlined-size-small"
@@ -261,6 +284,27 @@ export default function BuySellPopup(props: propsType) {
           name="weight"
           value={productInfo.weight}
           onChange={handleChange}
+          InputProps={{
+            inputProps: {
+              style: {
+                // Hides the default increment/decrement icons (spinner)
+                MozAppearance: "textfield",
+              },
+            },
+            sx: {
+              "& input[type=number]": {
+                MozAppearance: "textfield", // Firefox
+                "&::-webkit-outer-spin-button": {
+                  WebkitAppearance: "none",
+                  margin: 0,
+                },
+                "&::-webkit-inner-spin-button": {
+                  WebkitAppearance: "none",
+                  margin: 0,
+                },
+              },
+            },
+          }}
         />
 
         <FormControl component="fieldset">

@@ -25,7 +25,7 @@ import {
   import DeleteOutlineRoundedIcon from "@mui/icons-material/DeleteOutlineRounded";
   import ModeEditOutlinedIcon from "@mui/icons-material/ModeEditOutlined";
 import Addexpenses from "./add-expenses";
-import { listExpenses } from "../../../../redux/features/expenses.slice";
+import { deleteExpenses, listExpenses } from "../../../../redux/features/expenses.slice";
   
   export const Expenses=()=> {
     const [open, setOpen] = useState<boolean>(false);
@@ -42,19 +42,19 @@ import { listExpenses } from "../../../../redux/features/expenses.slice";
       (state: rootReducerType) => state.shopReducer
     );
   
-    const handleDeleteProduct = () => {
+    const handleDeleteExpenses = () => {
       const paramAs = { shopid: selectedShop?._id };
       const data = {
-        productid: selectedExpenses?._id,
+        expensesid: selectedExpenses?._id,
         successCallback: () => {
-          dispatch(listProduct(paramAs));
+          dispatch(listExpenses(paramAs));
           setAnchorEl(null);
         },
       };
-      dispatch(deleteProduct(data));
+      dispatch(deleteExpenses(data));
     };
   
-    const handleEditProduct = () => {
+    const handleEditExpenses = () => {
       setOpen(true);
       setIsEdit(true);
       setAnchorEl(null);
@@ -96,11 +96,11 @@ import { listExpenses } from "../../../../redux/features/expenses.slice";
         open={Boolean(anchorEl)}
         onClose={handleCloseMenu}
       >
-        <MenuItem onClick={handleEditProduct}>
+        <MenuItem onClick={handleEditExpenses}>
           <ModeEditOutlinedIcon />
           <Typography sx={{ textAlign: "center", ml: ".8rem" }}>Edit</Typography>
         </MenuItem>
-        <MenuItem onClick={handleDeleteProduct}>
+        <MenuItem onClick={handleDeleteExpenses}>
           <DeleteOutlineRoundedIcon />
           <Typography sx={{ textAlign: "center", ml: ".8rem" }}>
             Delete

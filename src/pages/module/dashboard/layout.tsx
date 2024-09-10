@@ -4,7 +4,6 @@ import { NavLink, Outlet } from "react-router-dom";
 import { DashboardHeader } from "./dashoard-header";
 
 export const Layout = () => {
-  const [isExpend, setIsExpend] = useState<boolean>(false);
   return (
     <Box sx={{ display: "flex", position: "relative",mt:'.2rem' }}>
       <Paper sx={{display:'flex',flexDirection:'column',height:'27rem',width:'12rem'}}>
@@ -12,6 +11,7 @@ export const Layout = () => {
           <NavLink to={"/product"} style={{width:'200px',textAlign:'center',textDecoration:'none',color:'rgba(0,0,0,0.8)',fontSize:'1.2rem',marginBottom:'1rem'}}>Product</NavLink>
           <NavLink to={"/tbuysell"} style={{width:'200px',textAlign:'center',textDecoration:'none',color:'rgba(0,0,0,0.8)',fontSize:'1.2rem',marginBottom:'1rem'}}>Total Buy/Sell</NavLink>
           <NavLink to={"/expenses"} style={{width:'200px',textAlign:'center',textDecoration:'none',color:'rgba(0,0,0,0.8)',fontSize:'1.2rem',marginBottom:'1rem'}}>Expenses</NavLink>
+          <NavLink to={"/calculations"} style={{width:'200px',textAlign:'center',textDecoration:'none',color:'rgba(0,0,0,0.8)',fontSize:'1.2rem',marginBottom:'1rem'}}>Calculations</NavLink>
       </Paper>
       <Box>
         <DashboardHeader/>

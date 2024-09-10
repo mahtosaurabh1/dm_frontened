@@ -3,13 +3,15 @@ import { createSlice } from "@reduxjs/toolkit";
 export interface expensesType {
     loading: boolean,
     expensesList:[],
+    totalExpense:number,
     error: Error | null;
 }
 
 const initialState : expensesType = {
     loading : false,
     expensesList:[],
-    error: null
+    error: null,
+    totalExpense:0
 }
 
 
@@ -51,6 +53,18 @@ export const expensesSlice = createSlice({
             state.loading = false;
         },
 
+        getTotalExpenses: (state,action)=>{
+            state.loading = true;
+        },
+        getTotalExpensesSuccess: (state,action) =>{
+            state.totalExpense=action.payload
+            state.loading = false;
+        },
+        getTotalExpensesFailure: (state,action) =>{
+            state.error = action.payload;
+            state.loading = false;
+        },
+
         deleteExpenses: (state,action)=>{
             state.loading = true;
         },
@@ -64,6 +78,6 @@ export const expensesSlice = createSlice({
     }
 }) 
 
-export const { addExpenses,addExpensesFailure,addExpensesSuccess,listExpenses,listExpensesSuccess,listExpensesFailure,deleteExpenses,deleteExpensesSuccess,deleteExpensesFailure,editExpenses,editExpensesSuccess,editExpensesFailure} =expensesSlice.actions;
+export const { addExpenses,addExpensesFailure,addExpensesSuccess,listExpenses,listExpensesSuccess,listExpensesFailure,deleteExpenses,deleteExpensesSuccess,deleteExpensesFailure,editExpenses,editExpensesSuccess,editExpensesFailure,getTotalExpenses,getTotalExpensesSuccess,getTotalExpensesFailure} =expensesSlice.actions;
 
 export default expensesSlice.reducer;

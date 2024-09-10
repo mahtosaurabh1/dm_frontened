@@ -9,7 +9,7 @@ import {
 import { useDispatch } from "react-redux";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
 
-function Total() {
+function TotalBuySell() {
   const { selectedShop }: any = useSelector(
     (state: rootReducerType) => state.shopReducer
   );
@@ -63,4 +63,4 @@ function Total() {
   );
 }
 
-export default Total;
+export default TotalBuySell;

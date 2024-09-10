@@ -7,8 +7,9 @@ import Product from "./pages/module/dashboard/product/product";
 import Shop from "./pages/module/shop";
 import Business from "./pages/module/dashboard/productTransaction";
 import { Layout } from "./pages/module/dashboard/layout";
-import Total from "./pages/module/dashboard/tbuysell/tbuysell";
 import { Expenses } from "./pages/module/dashboard/expenses/expenses";
+import TotalBuySell from "./pages/module/dashboard/tbuysell/tbuysell";
+import { Calculations } from "./pages/module/dashboard/calculations";
 
 function App() {
   return (
@@ -23,8 +24,9 @@ function App() {
           <Route path="/" element={<Layout />}>
             <Route index path="dashboard" element={<Business />} />
             <Route path="product" element={<Product />} />
-            <Route path="tbuysell" element={<Total/>}/>
+            <Route path="tbuysell" element={<TotalBuySell/>}/>
             <Route path="expenses" element={<Expenses/>}/>
+            <Route path="calculations" element={<Calculations/>}/>
           </Route>
         </Route>
       </Routes>

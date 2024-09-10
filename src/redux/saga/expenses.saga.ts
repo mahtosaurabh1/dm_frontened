@@ -11,6 +11,8 @@ import {
   deleteExpensesSuccess,
   editExpensesFailure,
   editExpensesSuccess,
+  getTotalExpensesFailure,
+  getTotalExpensesSuccess,
   listExpensesFailure,
   listExpensesSuccess,
 } from "../features/expenses.slice";
@@ -56,6 +58,26 @@ function* listExpensesSaga(action: any) {
   }
 }
 
+function* getTotalExpensesSaga(action: any) {
+  const { shopid } = action.payload;
+  try {
+    const { data }: AxiosResponse = yield baseInstance.get(
+      endpoint.totalExpenses,
+      {
+        headers: {
+          Authorization: shopid,
+        },
+      }
+    );
+    if (data) {
+      yield put(getTotalExpensesSuccess(data));
+    }
+  } catch (err: any) {
+    toastError(err.message);
+    yield put(getTotalExpensesFailure(err));
+  }
+}
+
 function* deleteExpensesSaga(action: any) {
   let { successCallback, ...payload } = action.payload;
   try {
@@ -97,6 +119,7 @@ function* expensesSaga() {
   yield debounce(500,"expensesSlice/listExpenses", listExpensesSaga);
   yield takeEvery("expensesSlice/deleteExpenses", deleteExpensesSaga);
   yield takeEvery("expensesSlice/editExpenses", editExpensesSaga);
+  yield takeEvery("expensesSlice/getTotalExpenses", getTotalExpensesSaga);
 }
 
 export default expensesSaga;

@@ -12,8 +12,16 @@ import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { rootReducerType } from "../../../../redux/features/rootslice";
-import { addProduct, editProduct, listProduct } from "../../../../redux/features/product.slice";
-import { addExpenses, editExpenses, listExpenses } from "../../../../redux/features/expenses.slice";
+import {
+  addProduct,
+  editProduct,
+  listProduct,
+} from "../../../../redux/features/product.slice";
+import {
+  addExpenses,
+  editExpenses,
+  listExpenses,
+} from "../../../../redux/features/expenses.slice";
 
 const Transition = React.forwardRef(function Transition(
   props: TransitionProps & {
@@ -29,22 +37,23 @@ interface propsType {
   dialogOpen: () => void;
   open: boolean;
   isedit: boolean;
-  selectedExpenses:any
+  selectedExpenses: any;
 }
 
 interface expensesType {
   expensesname: string;
-  expensesprice:string
+  expensesprice: number;
 }
 export default function Addexpenses(props: propsType) {
-  const { dialogClose, isedit, open,selectedExpenses } = props;
+  const { dialogClose, isedit, open, selectedExpenses } = props;
 
-  const {selectedShop}:any=useSelector((state:rootReducerType)=>state.shopReducer)
-  
+  const { selectedShop }: any = useSelector(
+    (state: rootReducerType) => state.shopReducer
+  );
 
   const [expensesInfo, setexpensesInfo] = React.useState<expensesType>({
     expensesname: "",
-    expensesprice:''
+    expensesprice: 0,
   });
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -54,52 +63,50 @@ export default function Addexpenses(props: propsType) {
     setexpensesInfo({ ...expensesInfo, [name]: value });
   };
 
-  const handleDialogClose=()=>{
+  const handleDialogClose = () => {
     setexpensesInfo({
       expensesname: "",
-      expensesprice:''
+      expensesprice: 0,
     });
     dialogClose();
-  }
+  };
 
-  const handleButton=()=>{
-    if(isedit){
-      let obj={
+  const handleButton = () => {
+    if (isedit) {
+      let obj = {
         expensesname: expensesInfo?.expensesname,
-        expensesprice:expensesInfo?.expensesprice,
-        expensesid:selectedExpenses?._id,
-        successCallback:()=>{
-          const paramAs = { shopid: selectedShop?._id }
+        expensesprice: expensesInfo?.expensesprice,
+        expensesid: selectedExpenses?._id,
+        successCallback: () => {
+          const paramAs = { shopid: selectedShop?._id };
           dispatch(listExpenses(paramAs));
           handleDialogClose();
-        }
-    }
-    dispatch(editExpenses(obj))
-    }else{
-      let obj={
+        },
+      };
+      dispatch(editExpenses(obj));
+    } else {
+      let obj = {
         expensesname: expensesInfo?.expensesname,
-        expensesprice:expensesInfo?.expensesprice,
-        shopid:selectedShop?._id,
-        successCallback:()=>{
-          const paramAs = { shopid: selectedShop?._id }
+        expensesprice: expensesInfo?.expensesprice,
+        shopid: selectedShop?._id,
+        successCallback: () => {
+          const paramAs = { shopid: selectedShop?._id };
           dispatch(listExpenses(paramAs));
           handleDialogClose();
-        }
-    }    
-    dispatch(addExpenses(obj))
+        },
+      };
+      dispatch(addExpenses(obj));
     }
-  }
+  };
 
-
-
-  React.useEffect(()=>{
-    if(isedit){     
+  React.useEffect(() => {
+    if (isedit) {
       setexpensesInfo({
         expensesname: selectedExpenses?.expensesname,
-        expensesprice:selectedExpenses?.expensesprice
-      })
-    } 
-  },[selectedExpenses,isedit])
+        expensesprice: selectedExpenses?.expensesprice,
+      });
+    }
+  }, [selectedExpenses, isedit]);
 
   return (
     <Dialog
@@ -110,7 +117,7 @@ export default function Addexpenses(props: propsType) {
       onClose={handleDialogClose}
       aria-describedby="alert-dialog-slide-description"
     >
-      <DialogTitle>{isedit?"Edit expenses":"Add expenses"}</DialogTitle>
+      <DialogTitle>{isedit ? "Edit expenses" : "Add expenses"}</DialogTitle>
       <IconButton
         aria-label="close"
         onClick={handleDialogClose}
@@ -136,19 +143,43 @@ export default function Addexpenses(props: propsType) {
           value={expensesInfo.expensesname}
           onChange={handleChange}
         />
-           <TextField
+        <TextField
           label="Expenses price"
           id="outlined-size-small"
           defaultValue="Small"
           size="small"
           fullWidth
           name="expensesprice"
+          type="number"
           value={expensesInfo.expensesprice}
           onChange={handleChange}
+          InputProps={{
+            inputProps: {
+              style: {
+                // Hides the default increment/decrement icons (spinner)
+                MozAppearance: "textfield",
+              },
+            },
+            sx: {
+              "& input[type=number]": {
+                MozAppearance: "textfield", // Firefox
+                "&::-webkit-outer-spin-button": {
+                  WebkitAppearance: "none",
+                  margin: 0,
+                },
+                "&::-webkit-inner-spin-button": {
+                  WebkitAppearance: "none",
+                  margin: 0,
+                },
+              },
+            },
+          }}
         />
       </DialogContent>
       <DialogActions>
-        <Button onClick={handleButton}>{isedit?"Save expenses":"Add expenses"}</Button>
+        <Button onClick={handleButton}>
+          {isedit ? "Save expenses" : "Add expenses"}
+        </Button>
       </DialogActions>
     </Dialog>
   );
