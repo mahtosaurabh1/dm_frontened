@@ -26,7 +26,7 @@ function* addProductTransactionSaga(action: any) {
 }
 
 function* listProductTransactionSaga(action: any) {
-  const { shopid, productname,transactionstatus,deal } = action.payload;
+  const { shopid, productname,transactionstatus,deal,startDate,endDate } = action.payload;
   try {
     const { data }: AxiosResponse = yield baseInstance.get(
       endpoint.getProductTransaction,
@@ -34,7 +34,9 @@ function* listProductTransactionSaga(action: any) {
         params: {
           productname: productname || "",
           transactionstatus:transactionstatus,
-          deal:deal
+          deal:deal,
+          startDate:startDate,
+          endDate:endDate
         },
         headers: {
           Authorization: shopid,

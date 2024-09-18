@@ -126,7 +126,7 @@ function Business() {
       flex: 1,
       renderCell: (params) => (
         <span>
-          {dayjs(params?.row?.createdAt).format("D MMMM YYYY, h:mm a")}
+          {dayjs(params?.row?.createdAt).format("D MMMM YYYY")}
         </span>
       ),
     },
@@ -154,12 +154,12 @@ function Business() {
   return (
     <Box p={2} sx={{width:'80rem',height:'100%'}}>
        <Box sx={{display:'flex',justifyContent:'flex-end',mb:'.4rem'}}>
-       <Button variant="outlined" onClick={dialogOpen}>
+       <Button variant="outlined" onClick={dialogOpen} sx={{height:'2rem'}}>
             Add business
           </Button>
        </Box>
 
-      <Box>
+      <Box sx={{height:'33rem'}}>
         <DataGrid
           rows={productTransaction}
           columns={columns}

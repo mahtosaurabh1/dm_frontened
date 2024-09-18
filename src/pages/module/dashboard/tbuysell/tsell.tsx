@@ -9,7 +9,7 @@ import {
 import { useDispatch } from "react-redux";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
 
-function TotalBuySell() {
+function TotalSell() {
   const { selectedShop }: any = useSelector(
     (state: rootReducerType) => state.shopReducer
   );
@@ -32,26 +32,12 @@ function TotalBuySell() {
     },
   ];
 
-
-  const handleBuyClic=()=>{
-    const obj = { shopid: selectedShop?._id ,transactionstatus:0,deal:'deal'};
-    dispatch(listProductTransaction(obj));
-  }
-
-  const handleSellClick=()=>{
-    const obj = { shopid: selectedShop?._id ,transactionstatus:1,deal:'deal'};
-    dispatch(listProductTransaction(obj));
-  }
   useEffect(() => {
-    const obj = { shopid: selectedShop?._id ,transactionstatus:0,deal:'deal'};
+    const obj = { shopid: selectedShop?._id ,transactionstatus:1,deal:'deal'};
     dispatch(listProductTransaction(obj));
   }, []);
   return (
     <Box p={2} sx={{ width: "80rem" }}>
-        <Box>
-            <Button onClick={handleBuyClic}>Buy</Button>
-            <Button onClick={handleSellClick}>Sell</Button>
-        </Box>
       <DataGrid
         rows={productTransaction}
         columns={columns}
@@ -63,4 +49,4 @@ function TotalBuySell() {
   );
 }
 
-export default TotalBuySell;
+export default TotalSell;

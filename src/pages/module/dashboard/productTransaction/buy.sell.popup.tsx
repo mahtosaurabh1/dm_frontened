@@ -19,6 +19,10 @@ import {
   RadioGroup,
   TextField,
 } from "@mui/material";
+import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { Close } from "@mui/icons-material";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
@@ -36,6 +40,7 @@ import {
   editProductTransaction,
   listProductTransaction,
 } from "../../../../redux/features/product.transaction.slice";
+import dayjs from "dayjs";
 
 const Transition = React.forwardRef(function Transition(
   props: TransitionProps & {
@@ -59,13 +64,11 @@ interface productType {
   productprice: number;
   weight: number;
   transactionstatus: number;
+  createdAt: any;
 }
 export default function BuySellPopup(props: propsType) {
   const { dialogClose, isedit, open, selectedProduct } = props;
 
-  const { userInfo }: any = useSelector(
-    (state: rootReducerType) => state.authReducer
-  );
   const { selectedShop }: any = useSelector(
     (state: rootReducerType) => state.shopReducer
   );
@@ -73,12 +76,14 @@ export default function BuySellPopup(props: propsType) {
   const { productList }: any = useSelector(
     (state: rootReducerType) => state.productReduer
   );
+  const Today = dayjs();
 
   const [productInfo, setProductInfo] = React.useState<productType>({
     productname: "",
     productprice: 0,
     weight: 0,
     transactionstatus: 0,
+    createdAt: Today.format("YYYY-MM-DD"),
   });
 
   const [chips, setChips] = React.useState<any>(null);
@@ -88,8 +93,6 @@ export default function BuySellPopup(props: propsType) {
   };
 
   const handleAddChip = (event: any, newValue: any) => {
-    console.log("aaaaaaaaaaaaa", newValue);
-
     setChips(newValue);
   };
 
@@ -116,15 +119,20 @@ export default function BuySellPopup(props: propsType) {
     }
   };
 
-  const handleDialogClose = () => {
-    setProductInfo({
-      productname: "",
-      productprice: 0,
-      weight: 0,
-      transactionstatus: 0,
-    });
-    dialogClose();
-    setChips(null);
+
+  const handleDateChange = (e: any) => {
+    const val = dayjs(e).format("YYYY-MM-DD");
+    if (val !== "Invalid Date") {
+      setProductInfo({
+        ...productInfo,
+        createdAt: val,
+      });
+    } else {
+      setProductInfo({
+        ...productInfo,
+        createdAt: val,
+      });
+    }
   };
 
   const handleButton = () => {
@@ -136,6 +144,7 @@ export default function BuySellPopup(props: propsType) {
         weight: productInfo?.weight,
         producttransactionid: selectedProduct?._id,
         transactionstatus: productInfo?.transactionstatus,
+        createdAt: productInfo?.createdAt !== "Invalid Date"?productInfo?.createdAt:Today,
         successCallback: () => {
           const paramAs = { shopid: selectedShop?._id };
           dispatch(listProductTransaction(paramAs));
@@ -143,7 +152,6 @@ export default function BuySellPopup(props: propsType) {
         },
       };
       dispatch(editProductTransaction(obj));
-      console.log("aaaa", chips);
     } else {
       let obj = {
         productname: chips?.productname,
@@ -151,6 +159,7 @@ export default function BuySellPopup(props: propsType) {
         productprice: productInfo?.productprice,
         weight: productInfo?.weight,
         shopid: selectedShop?._id,
+        createdAt: productInfo?.createdAt !== "Invalid Date"?productInfo?.createdAt:Today,
         transactionstatus: productInfo?.transactionstatus,
         successCallback: () => {
           const paramAs = { shopid: selectedShop?._id };
@@ -163,6 +172,18 @@ export default function BuySellPopup(props: propsType) {
     }
   };
 
+  const handleDialogClose = () => {
+    setProductInfo({
+      productname: "",
+      productprice: 0,
+      weight: 0,
+      transactionstatus: 0,
+      createdAt: '',
+    });
+    dialogClose();
+    setChips(null);
+  };
+
   React.useEffect(() => {
     if (isedit) {
       setProductInfo({
@@ -170,6 +191,7 @@ export default function BuySellPopup(props: propsType) {
         productprice: selectedProduct?.productprice,
         weight: selectedProduct?.weight,
         transactionstatus: selectedProduct?.transactionstatus,
+        createdAt: selectedProduct?.createdAt,
       });
       setChips({
         productname: selectedProduct.productname,
@@ -306,6 +328,17 @@ export default function BuySellPopup(props: propsType) {
             },
           }}
         />
+
+        <LocalizationProvider dateAdapter={AdapterDayjs}>
+          <DemoContainer components={["DatePicker"]}>
+            <DatePicker
+              label="Basic date picker"
+              maxDate={Today}
+              onChange={handleDateChange}
+              value={dayjs(productInfo?.createdAt)}
+            />
+          </DemoContainer>
+        </LocalizationProvider>
 
         <FormControl component="fieldset">
           <FormLabel component="legend">Transaction Type</FormLabel>

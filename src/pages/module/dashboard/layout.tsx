@@ -9,7 +9,8 @@ export const Layout = () => {
       <Paper sx={{display:'flex',flexDirection:'column',height:'27rem',width:'12rem'}}>
           <NavLink to={"/dashboard"} style={{width:'200px',textAlign:'center',textDecoration:'none',color:'rgba(0,0,0,0.8)',fontSize:'1.2rem',marginBottom:'1rem'}}>Dashboard</NavLink>
           <NavLink to={"/product"} style={{width:'200px',textAlign:'center',textDecoration:'none',color:'rgba(0,0,0,0.8)',fontSize:'1.2rem',marginBottom:'1rem'}}>Product</NavLink>
-          <NavLink to={"/tbuysell"} style={{width:'200px',textAlign:'center',textDecoration:'none',color:'rgba(0,0,0,0.8)',fontSize:'1.2rem',marginBottom:'1rem'}}>Total Buy/Sell</NavLink>
+          <NavLink to={"/tbuy"} style={{width:'200px',textAlign:'center',textDecoration:'none',color:'rgba(0,0,0,0.8)',fontSize:'1.2rem',marginBottom:'1rem'}}>Total Buy</NavLink>
+          <NavLink to={"/tsell"} style={{width:'200px',textAlign:'center',textDecoration:'none',color:'rgba(0,0,0,0.8)',fontSize:'1.2rem',marginBottom:'1rem'}}>Total Sell</NavLink>
           <NavLink to={"/expenses"} style={{width:'200px',textAlign:'center',textDecoration:'none',color:'rgba(0,0,0,0.8)',fontSize:'1.2rem',marginBottom:'1rem'}}>Expenses</NavLink>
           <NavLink to={"/calculations"} style={{width:'200px',textAlign:'center',textDecoration:'none',color:'rgba(0,0,0,0.8)',fontSize:'1.2rem',marginBottom:'1rem'}}>Calculations</NavLink>
       </Paper>
