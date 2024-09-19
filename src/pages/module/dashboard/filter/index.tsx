@@ -15,8 +15,9 @@ import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import dayjs from "dayjs";
 import { useLocation } from "react-router-dom";
-import { listProductTransaction } from "../../../../redux/features/product.transaction.slice";
+import { listProductTransaction, totalBuySellPrice } from "../../../../redux/features/product.transaction.slice";
 import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
+import { getTotalExpenses, listExpenses } from "../../../../redux/features/expenses.slice";
 
 const Transition = React.forwardRef(function Transition(
   props: TransitionProps & {
@@ -101,7 +102,25 @@ export default function Filter(props: propsType) {
         endDate: filterData.endDate,
       };
       dispatch(listProductTransaction(obj));
+    }else if (location.pathname === "/expenses") {
+      const obj = {
+        shopid: selectedShop?._id,
+        startDate: filterData.startDate,
+        endDate: filterData.endDate,
+      };
+
+      dispatch(listExpenses(obj));
+    }else if (location.pathname === "/calculations") {
+      const obj = {
+        shopid: selectedShop?._id,
+        startDate: filterData.startDate,
+        endDate: filterData.endDate,
+      };
+
+      dispatch(getTotalExpenses(obj));
+      dispatch(totalBuySellPrice(obj));
     }
+
   };
 
   return (

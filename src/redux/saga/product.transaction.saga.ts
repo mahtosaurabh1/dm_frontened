@@ -89,11 +89,15 @@ function* editProductTransactionSaga(action:any) {
 }
 
 function* totalBuySellPriceSaga(action: any) {
-  const { shopid } = action.payload;
+  const { shopid ,startDate,endDate} = action.payload;
   try {
     const { data }: AxiosResponse = yield baseInstance.get(
       endpoint.totalbuysellprice,
       {
+        params: {
+          startDate:startDate,
+          endDate:endDate
+        },
         headers: {
           Authorization: shopid,
         },

@@ -36,13 +36,15 @@ function* addExpensesSaga(action: any) {
 }
 
 function* listExpensesSaga(action: any) {
-  const { shopid, expensesname } = action.payload;
+  const { shopid, expensesname,startDate,endDate } = action.payload;
   try {
     const { data }: AxiosResponse = yield baseInstance.get(
       endpoint.getExpenses,
       {
         params: {
           expensesname: expensesname || "",
+          startDate:startDate,
+          endDate:endDate
         },
         headers: {
           Authorization: shopid,
@@ -59,11 +61,15 @@ function* listExpensesSaga(action: any) {
 }
 
 function* getTotalExpensesSaga(action: any) {
-  const { shopid } = action.payload;
+  const { shopid,startDate,endDate } = action.payload;
   try {
     const { data }: AxiosResponse = yield baseInstance.get(
       endpoint.totalExpenses,
       {
+        params: {
+          startDate:startDate,
+          endDate:endDate
+        },
         headers: {
           Authorization: shopid,
         },
