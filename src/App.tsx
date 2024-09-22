@@ -12,6 +12,7 @@ import TotalBuySell from "./pages/module/dashboard/tbuysell/tbuy";
 import { Calculations } from "./pages/module/dashboard/calculations";
 import TotalBuy from "./pages/module/dashboard/tbuysell/tbuy";
 import TotalSell from "./pages/module/dashboard/tbuysell/tsell";
+import Stock from "./pages/module/dashboard/stock";
 
 function App() {
   return (
@@ -27,6 +28,7 @@ function App() {
             <Route index path="dashboard" element={<Business />} />
             <Route path="product" element={<Product />} />
             <Route path="tbuy" element={<TotalBuy/>}/>
+            <Route path="stock" element={<Stock/>}/>
             <Route path="tsell" element={<TotalSell/>}/>
             <Route path="expenses" element={<Expenses/>}/>
             <Route path="calculations" element={<Calculations/>}/>

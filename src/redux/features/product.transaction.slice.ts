@@ -3,14 +3,16 @@ import { createSlice } from "@reduxjs/toolkit";
 export interface productTransactionType {
   loading: boolean;
   productTransaction: [];
-  totalBuySell:any;
+  totalBuySell: any;
+  stock:[],
   error: Error | null;
 }
 
 const initialState: productTransactionType = {
   loading: false,
   productTransaction: [],
-  totalBuySell:{},
+  totalBuySell: {},
+  stock:[],
   error: null,
 };
 
@@ -63,17 +65,30 @@ export const productTransactionSlice = createSlice({
       state.loading = false;
     },
 
-    totalBuySellPrice: (state,action)=>{
+    totalBuySellPrice: (state, action) => {
       state.loading = true;
-  },
-  totalBuySellPriceSuccess: (state,action) =>{
-      state.totalBuySell=action.payload
+    },
+    totalBuySellPriceSuccess: (state, action) => {
+      state.totalBuySell = action.payload;
       state.loading = false;
-  },
-  totalBuySellPriceFailure: (state,action) =>{
+    },
+    totalBuySellPriceFailure: (state, action) => {
       state.error = action.payload;
       state.loading = false;
-  },
+    },
+
+    
+    getStockLeft: (state, action) => {
+      state.loading = true;
+    },
+    getStockLeftSuccess: (state, action) => {
+      state.stock = action.payload;
+      state.loading = false;
+    },
+    getStockLeftFailure: (state, action) => {
+      state.error = action.payload;
+      state.loading = false;
+    },
   },
 });
 
@@ -92,7 +107,10 @@ export const {
   editProductTransactionFailure,
   totalBuySellPrice,
   totalBuySellPriceSuccess,
-  totalBuySellPriceFailure
+  totalBuySellPriceFailure,
+  getStockLeft,
+  getStockLeftSuccess,
+  getStockLeftFailure
 } = productTransactionSlice.actions;
 
 export default productTransactionSlice.reducer;
