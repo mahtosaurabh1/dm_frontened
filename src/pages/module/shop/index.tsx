@@ -34,6 +34,7 @@ import ShoppingBagOutlinedIcon from "@mui/icons-material/ShoppingBagOutlined";
 import { Shop2, Shop2Outlined } from "@mui/icons-material";
 import Shopicon from "../../../shared/icon/shop.icon";
 import { red } from "@mui/material/colors";
+import { dateFormater } from "../../../shared/util/util";
 
 function Shop() {
   const [open, setOpen] = useState<boolean>(false);
@@ -158,38 +159,56 @@ function Shop() {
           return (
             <Card
               sx={{
-                px: 1.25,
-                py: 1.25,
+                px: { xs: 1, sm: 1.5, md: 2 },
+                py: { xs: 1, sm: 1.5, md: 2 },
                 backgroundColor: "#fff",
                 boxShadow: "4px 9px 30px 0 rgba(0,0,0,0.04)",
                 position: "relative",
                 borderRadius: 2,
                 cursor: "pointer",
-                display:'flex',
-                width:'15rem',
-                gap:'2rem'
+                display: "flex",
 
+                width: { xs: "100%", sm: "18rem", md: "17rem" },
+                gap: "1rem",
+                alignItems: "center",
               }}
-              
+              onClick={() => handleGotoBusinessPage(val)}
             >
-      
               <Stack
-                sx={{ height: "100%",display:'flex',alignItems:'center',justifyContent:'center' }}
-                alignItems={"flex-start"}
-                onClick={() => handleGotoBusinessPage(val)}
+                sx={{
+                  height: "100%",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                }}
               >
-               <Shop2 />
+                <img
+                  src="/assest/shops.png"
+                  style={{ height: "2rem", width: "2rem" }}
+                />
               </Stack>
-
               <CardHeader
                 action={
-                  <IconButton aria-label="settings" onClick={(e)=>handleMoreClick(e,val)}>
+                  <IconButton
+                    aria-label="settings"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      handleMoreClick(e, val);
+                    }}
+                  >
                     <MoreVertIcon />
                   </IconButton>
                 }
                 title={val?.shopname}
-                subheader="address"
+                subheader={
+                  <Typography variant="body2" sx={{ fontSize: "12px" }}>
+                    {`Created at ${dateFormater(val?.createdAt)}`}
+                  </Typography>
+                }
               />
+
+              <span> </span>
+              <Typography></Typography>
             </Card>
           );
         })}

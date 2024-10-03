@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Outlet, useNavigate } from 'react-router-dom';
 import Appheader from './shared-component/app-header';
 import { Box } from '@mui/material';
@@ -6,6 +6,16 @@ import { Box } from '@mui/material';
 
 
 const MainLayout = () => {
+  const navigate=useNavigate();
+  const isAuthenticated = () => {
+    return localStorage.getItem("userinfo") !== null;
+  };
+
+  useEffect(() => {
+    if (!isAuthenticated()) {
+      navigate("/login");
+    }
+  }, [navigate]);
   return (
     <div>
     <Appheader />

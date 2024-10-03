@@ -65,7 +65,7 @@ function Appheader() {
       <MenuItem onClick={handleCloseUserMenu}>
         <Box display="flex" alignItems="center">
           <Avatar sx={{ marginRight: 2 }}>
-            {userInfo?.fullname.charAt(0)}
+            {userInfo?.fullname?.charAt(0)}
           </Avatar>
           <Typography sx={{ textAlign: "center" }}>
             {userInfo?.fullname}
@@ -108,7 +108,7 @@ function Appheader() {
             <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
                 <Avatar sx={{ marginRight: 2 }}>
-                  {userInfo?.fullname.charAt(0)}
+                  {userInfo?.fullname?.charAt(0)}
                 </Avatar>
               </IconButton>
             </Tooltip>
