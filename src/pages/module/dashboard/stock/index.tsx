@@ -15,8 +15,8 @@ function Stock() {
 
       const columns: GridColDef[] = [
         { field: "productname", headerName: "Product Name", flex: 1 },
-        { field: "avgTransactionPriceForStock", headerName: "Weight", flex: 1 },
-        { field: "weightLeftInStock", headerName: "Product Price", flex: 1 }
+        { field: "weightLeftInStock", headerName: "Weight", flex: 1 },
+        { field: "avgTransactionPriceForStock", headerName: "Product Price", flex: 1 }
       ];
     useEffect(()=>{
         const paramAs = { shopid: selectedShop?._id };

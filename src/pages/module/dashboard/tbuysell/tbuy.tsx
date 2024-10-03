@@ -39,6 +39,7 @@ function TotalBuy() {
   }, []);
   return (
     <Box p={2} sx={{ width: "80rem" }}>
+      <Box sx={{height:'33rem'}}>
       <DataGrid
         rows={productTransaction}
         columns={columns}
@@ -46,6 +47,7 @@ function TotalBuy() {
         disableRowSelectionOnClick
         hideFooter
       />
+      </Box>
     </Box>
   );
 }

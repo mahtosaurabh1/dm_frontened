@@ -120,7 +120,7 @@ function Product() {
           Add Product
         </Button>
       </Box>
-      <Box sx={{ display: "flex", gap: "2rem" }}>
+      <Box sx={{ display: "flex", gap: "2rem",flexWrap:'wrap' }}>
         {productList?.map((val: any) => {
           return (
             <Card sx={{ width: "12rem", height: "12rem" }}>
